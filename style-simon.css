@@ -1,0 +1,78 @@
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Play', sans-serif;
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    font-size: 60px;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    width: 400px;
+    height: 400px;
+    position: relative;
+    margin: 6% auto;
+}
+
+section {
+    grid-column: span 1;
+    grid-row: span 1;
+    border: 15px solid gray;
+}
+
+#controls {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    top: 50%;
+    left: 50%;
+    margin: -100px 0 0 -100px;    /*to perfectly center element (half of w/h)*/
+    border: 15px solid gray;
+    border-radius: 100%;
+    background-color: white;
+    padding: 8px;
+}
+
+#button1 {
+    border-top-left-radius: 100%;
+    background-color: #008000;
+}
+
+#button2 {
+    border-top-right-radius: 100%;
+    background-color: #b30000;
+}
+
+#button3 {
+    border-bottom-left-radius: 100%;
+    background-color: #e6e600;
+}
+
+#button4 {
+    border-bottom-right-radius: 100%;
+    background-color: #0000cc;
+}
+
+a:link, a:visited {
+    color: Blue;
+    text-decoration: none;
+}
+
+footer {
+    position: relative;
+    font-size: 18px;
+    font-style: italic;
+}
+
+
