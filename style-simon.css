@@ -56,7 +56,7 @@ section {
 
 #button3 {
     border-bottom-left-radius: 100%;
-    background-color: #e6e600;
+    background-color: #cccc00;
 }
 
 #button4 {
@@ -70,7 +70,12 @@ a:link, a:visited {
 }
 
 footer {
-    position: relative;
+    /*position: absolute;*/
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin-top: 40px;
+    padding: 10px;
     font-size: 18px;
     font-style: italic;
 }
