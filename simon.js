@@ -1,4 +1,6 @@
+let gameOn = false;
 let sequence = [];
+
 const greenButton = {
   number: 1,
   color: '#008000',
@@ -27,32 +29,50 @@ const blueButton = {
   sound: document.getElementById('sound4')
 }
 
-function highlight(button) {
-  $('#button'+button.number).css('background-color', button.litColor);
-  setTimeout(() => {
-    $('#button'+button.number).css('background-color', button.color);
-  }, 1000);
-}
-
-
-$('section').mousedown(function(event) {
-  let button = event.target.id;
-  switch (button) {
-    case 'button1':
+function performButtonAction (btnNum) {
+  let button;
+  switch (btnNum) {
+    case 1:
       button = greenButton;
       break;
-    case 'button2':
+    case 2:
       button = redButton;
       break;
-    case 'button3':
+    case 3:
       button = yellowButton;
       break;
-    case 'button4':
+    case 4:
       button = blueButton;
       break;
     }
-  highlight(button);
-  button.sound.play();
+
+    $('#button'+btnNum).css('background-color', button.litColor);
+    setTimeout(() => {
+      $('#button'+btnNum).css('background-color', button.color);
+    }, 1000);
+
+    button.sound.play();
+}
+
+$('#power').click(function() {
+  gameOn = !gameOn;
+
+  if (gameOn) {
+    let randomNum = Math.ceil(Math.random() * 4);
+    sequence.push(randomNum);
+
+    for (const num of sequence) {
+      performButtonAction(num);
+    }
+  }
+
+});
+
+$('section').mousedown(function(event) {
+  let btnNum = event.target.id.slice(-1);
+  btnNum = parseInt(btnNum);
+  performButtonAction(btnNum);
+
 });
 
 
