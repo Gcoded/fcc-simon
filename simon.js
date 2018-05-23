@@ -1,5 +1,4 @@
 let gameOn = false;
-let sequence = [];
 
 const greenButton = {
   number: 1,
@@ -29,7 +28,32 @@ const blueButton = {
   sound: document.getElementById('sound4')
 }
 
-function performButtonAction (btnNum) {
+const simon = {
+  sequence: [],
+  showSequence: function() {
+    let index = 0;
+    const sequenceLength = simon.sequence.length;
+    const timer = setInterval(function() {
+      if (index < sequenceLength) {
+        performButtonAction(simon.sequence[index]);
+        index++;
+      }
+      else {
+        clearInterval(timer);
+        simon.addToSequence();
+      }
+
+    }, 1500);
+  },
+  addToSequence: function() {
+    if (this.sequence.length < 20) {
+      const randomNum = Math.ceil(Math.random() * 4);
+      this.sequence.push(randomNum);
+    }
+  }
+}
+
+function performButtonAction(btnNum) {
   let button;
   switch (btnNum) {
     case 1:
@@ -58,21 +82,19 @@ $('#power').click(function() {
   gameOn = !gameOn;
 
   if (gameOn) {
-    let randomNum = Math.ceil(Math.random() * 4);
-    sequence.push(randomNum);
+    simon.addToSequence();
+    $('#play').click(simon.showSequence);
 
-    for (const num of sequence) {
-      performButtonAction(num);
-    }
   }
-
 });
 
 $('section').mousedown(function(event) {
-  let btnNum = event.target.id.slice(-1);
-  btnNum = parseInt(btnNum);
-  performButtonAction(btnNum);
-
+  if (gameOn) {
+    let btnNum = event.target.id.slice(-1);
+    btnNum = parseInt(btnNum);
+    performButtonAction(btnNum);
+  }
 });
+
 
 
