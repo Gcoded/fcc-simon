@@ -41,13 +41,32 @@ const simon = {
       else {
         clearInterval(timer);
       }
-
     }, 1500);
   },
   addToSequence: function() {
     if (this.sequence.length < 20) {
       const randomNum = Math.ceil(Math.random() * 4);
       this.sequence.push(randomNum);
+    }
+  }
+}
+
+const player = {
+  getSequence: function() {
+    $('section').mousedown(function(event) {
+      if (gameOn) {
+        let btnNum = event.target.id.slice(-1);
+        let selectionNum = 0;
+        btnNum = parseInt(btnNum);
+        player.compareToSimon(selectionNum, btnNum);
+        selectionNum++;
+      }
+    });
+  },
+  compareToSimon: function(selectionNum, btnNum) {
+    if(btnNum !== simon.sequence[selectionNum]) {
+      const error = document.getElementById('error');
+      error.play();
     }
   }
 }
@@ -85,6 +104,7 @@ $('#play').click(function() {
   if (gameOn) {
     simon.addToSequence();
     simon.showSequence();
+    player.getSequence();
   }
   else {
     simon.sequence = [];
@@ -98,6 +118,5 @@ $('section').mousedown(function(event) {
     performButtonAction(btnNum);
   }
 });
-
 
 
