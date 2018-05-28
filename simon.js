@@ -40,7 +40,6 @@ const simon = {
       }
       else {
         clearInterval(timer);
-        simon.addToSequence();
       }
 
     }, 1500);
@@ -80,11 +79,15 @@ function performButtonAction(btnNum) {
 
 $('#power').click(function() {
   gameOn = !gameOn;
+});
 
+$('#play').click(function() {
   if (gameOn) {
     simon.addToSequence();
-    $('#play').click(simon.showSequence);
-
+    simon.showSequence();
+  }
+  else {
+    simon.sequence = [];
   }
 });
 
