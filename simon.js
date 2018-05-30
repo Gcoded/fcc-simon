@@ -30,9 +30,13 @@ const blueButton = {
 
 const simon = {
   sequence: [],
+  seqPosition: 0,
+  seqMax: 20,
+  correctBtn: true,
+  errorSound: document.getElementById('error'),
   showSequence: function() {
     let index = 0;
-    const sequenceLength = simon.sequence.length;
+    const sequenceLength = this.sequence.length;
     const timer = setInterval(function() {
       if (index < sequenceLength) {
         performButtonAction(simon.sequence[index]);
@@ -40,33 +44,39 @@ const simon = {
       }
       else {
         clearInterval(timer);
+        player.playerTurn = true;
       }
-    }, 1500);
+    }, 1000);
   },
   addToSequence: function() {
-    if (this.sequence.length < 20) {
+    if (this.sequence.length < this.seqMax) {
       const randomNum = Math.ceil(Math.random() * 4);
       this.sequence.push(randomNum);
+      this.showSequence();
     }
   }
 }
 
 const player = {
-  getSequence: function() {
-    $('section').mousedown(function(event) {
-      if (gameOn) {
-        let btnNum = event.target.id.slice(-1);
-        let selectionNum = 0;
-        btnNum = parseInt(btnNum);
-        player.compareToSimon(selectionNum, btnNum);
-        selectionNum++;
-      }
-    });
-  },
-  compareToSimon: function(selectionNum, btnNum) {
-    if(btnNum !== simon.sequence[selectionNum]) {
-      const error = document.getElementById('error');
-      error.play();
+  playerTurn: false,
+  checkSequence: function(btnSelected) {
+    if (btnSelected !== simon.sequence[simon.seqPosition]) {
+      this.playerTurn = false;
+      simon.correctBtn = false;
+      setTimeout(function() {
+        simon.showSequence();
+      }, 2500);
+      simon.seqPosition = 0;
+    }
+    else if (simon.seqPosition < simon.sequence.length - 1) {
+      simon.seqPosition++;
+    }
+    else {
+      this.playerTurn = false;
+      simon.seqPosition = 0;
+      setTimeout(function() {
+        simon.addToSequence();
+      }, 1500);
     }
   }
 }
@@ -91,32 +101,37 @@ function performButtonAction(btnNum) {
     $('#button'+btnNum).css('background-color', button.litColor);
     setTimeout(() => {
       $('#button'+btnNum).css('background-color', button.color);
-    }, 1000);
+    }, 700);
 
-    button.sound.play();
+    if (simon.correctBtn) {
+      button.sound.play();
+    }
+    else {
+      simon.errorSound.play();
+      simon.correctBtn = true;
+    }
 }
 
 $('#power').click(function() {
   gameOn = !gameOn;
+  simon.sequence = [];
+  player.playerTurn = false;
 });
 
 $('#play').click(function() {
-  if (gameOn) {
+  if (gameOn && simon.sequence.length === 0) {
     simon.addToSequence();
-    simon.showSequence();
-    player.getSequence();
-  }
-  else {
-    simon.sequence = [];
   }
 });
 
 $('section').mousedown(function(event) {
-  if (gameOn) {
-    let btnNum = event.target.id.slice(-1);
-    btnNum = parseInt(btnNum);
-    performButtonAction(btnNum);
+  if (gameOn && player.playerTurn) {
+    let btnSelected = event.target.id.slice(-1);
+    btnSelected = parseInt(btnSelected);
+    player.checkSequence(btnSelected);
+    performButtonAction(btnSelected);
   }
 });
+
 
 
