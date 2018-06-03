@@ -38,7 +38,8 @@ const simon = {
     let index = 0;
     const sequenceLength = this.sequence.length;
     const timer = setInterval(function() {
-      if (index < sequenceLength) {
+      if (gameOn && index < sequenceLength) {
+        $('#countDisplay').text(sequenceLength);
         performButtonAction(simon.sequence[index]);
         index++;
       }
@@ -116,6 +117,12 @@ $('#power').click(function() {
   gameOn = !gameOn;
   simon.sequence = [];
   player.playerTurn = false;
+  if (gameOn) {
+    $('#countDisplay').text(0);
+  }
+  else {
+    $('#countDisplay').text('');
+  }
 });
 
 $('#play').click(function() {
