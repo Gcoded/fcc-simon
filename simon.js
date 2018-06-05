@@ -46,6 +46,7 @@ const simon = {
       else {
         clearInterval(timer);
         player.playerTurn = true;
+        player.checkForInaction();
       }
     }, 1000);
   },
@@ -60,6 +61,17 @@ const simon = {
 
 const player = {
   playerTurn: false,
+  inactionTimer: 0,
+  checkForInaction: function() {
+    this.inactionTimer = setTimeout(function() {
+      player.playerTurn = false;
+      simon.errorSound.play();
+      setTimeout(function() {
+        simon.showSequence();
+      }, 2500);
+      simon.seqPosition = 0;
+    }, 5000);
+},
   checkSequence: function(btnSelected) {
     if (btnSelected !== simon.sequence[simon.seqPosition]) {
       this.playerTurn = false;
@@ -71,6 +83,7 @@ const player = {
     }
     else if (simon.seqPosition < simon.sequence.length - 1) {
       simon.seqPosition++;
+      this.checkForInaction();
     }
     else {
       this.playerTurn = false;
@@ -117,6 +130,7 @@ $('#power').click(function() {
   gameOn = !gameOn;
   simon.sequence = [];
   player.playerTurn = false;
+  clearTimeout(player.inactionTimer);
   if (gameOn) {
     $('#countDisplay').text(0);
   }
@@ -133,6 +147,7 @@ $('#play').click(function() {
 
 $('section').mousedown(function(event) {
   if (gameOn && player.playerTurn) {
+    clearTimeout(player.inactionTimer);
     let btnSelected = event.target.id.slice(-1);
     btnSelected = parseInt(btnSelected);
     player.checkSequence(btnSelected);
