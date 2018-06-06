@@ -73,6 +73,10 @@ section {
     background-color: #0000cc;
 }
 
+.strictActive {
+    background-color: #ffb833;
+}
+
 a:link, a:visited {
     color: Blue;
     text-decoration: none;

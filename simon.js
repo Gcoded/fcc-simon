@@ -34,6 +34,7 @@ const simon = {
   seqMax: 20,
   correctBtn: true,
   errorSound: document.getElementById('error'),
+  strictMode: false,
   showSequence: function() {
     let index = 0;
     const sequenceLength = this.sequence.length;
@@ -56,6 +57,19 @@ const simon = {
       this.sequence.push(randomNum);
       this.showSequence();
     }
+  },
+  resetGame: function() {
+    simon.sequence = [];
+    player.playerTurn = false;
+    clearTimeout(player.inactionTimer);
+    if (gameOn) {
+      $('#countDisplay').text(0);
+    }
+    else {
+      $('#countDisplay').text('');
+      this.strictMode = false;
+      $('#strict').removeClass('strictActive');
+    }
   }
 }
 
@@ -63,23 +77,37 @@ const player = {
   playerTurn: false,
   inactionTimer: 0,
   checkForInaction: function() {
-    this.inactionTimer = setTimeout(function() {
-      player.playerTurn = false;
-      simon.errorSound.play();
-      setTimeout(function() {
-        simon.showSequence();
-      }, 2500);
-      simon.seqPosition = 0;
-    }, 5000);
-},
+    if (gameOn) {
+      this.inactionTimer = setTimeout(function() {
+        player.playerTurn = false;
+        simon.errorSound.play();
+        simon.seqPosition = 0;
+        setTimeout(function() {
+          if (simon.strictMode) {
+            simon.resetGame();
+            simon.addToSequence();
+          }
+          else {
+            simon.showSequence();
+          }
+        }, 2500);
+      }, 5000);
+    }
+  },
   checkSequence: function(btnSelected) {
     if (btnSelected !== simon.sequence[simon.seqPosition]) {
       this.playerTurn = false;
       simon.correctBtn = false;
-      setTimeout(function() {
-        simon.showSequence();
-      }, 2500);
       simon.seqPosition = 0;
+      setTimeout(function() {
+        if (simon.strictMode) {
+          simon.resetGame();
+          simon.addToSequence();
+        }
+        else {
+          simon.showSequence();
+        }
+      }, 2500);
     }
     else if (simon.seqPosition < simon.sequence.length - 1) {
       simon.seqPosition++;
@@ -128,20 +156,19 @@ function performButtonAction(btnNum) {
 
 $('#power').click(function() {
   gameOn = !gameOn;
-  simon.sequence = [];
-  player.playerTurn = false;
-  clearTimeout(player.inactionTimer);
-  if (gameOn) {
-    $('#countDisplay').text(0);
-  }
-  else {
-    $('#countDisplay').text('');
-  }
+  simon.resetGame();
 });
 
 $('#play').click(function() {
   if (gameOn && simon.sequence.length === 0) {
     simon.addToSequence();
+  }
+});
+
+$('#strict').click(function() {
+  if (gameOn) {
+    simon.strictMode = !simon.strictMode;
+    $('#strict').toggleClass('strictActive');
   }
 });
 
