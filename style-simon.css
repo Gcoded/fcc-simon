@@ -77,6 +77,21 @@ section {
     background-color: #ffb833;
 }
 
+#winnerMessage {
+    display: none;
+    position: absolute;
+    width: 500px;
+    height: 250px;
+    top: 50%;
+    left: 50%;
+    margin: -125px 0 0 -250px;
+    padding: 8%;
+    border-radius: 16px;
+    background-color: black;
+    color: orange;
+    font-size: 60px;
+}
+
 a:link, a:visited {
     color: Blue;
     text-decoration: none;

@@ -57,6 +57,10 @@ const simon = {
       this.sequence.push(randomNum);
       this.showSequence();
     }
+    else {
+      this.showWinnerMessage();
+      this.resetGame();
+    }
   },
   resetGame: function() {
     simon.sequence = [];
@@ -70,6 +74,13 @@ const simon = {
       this.strictMode = false;
       $('#strict').removeClass('strictActive');
     }
+  },
+  showWinnerMessage: function() {
+    $('#winnerMessage').text('Nice job, you beat Simon!');
+    $('#winnerMessage').toggle();
+    setTimeout(function() {
+      $('#winnerMessage').toggle();
+    }, 5000);
   }
 }
 
