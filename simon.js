@@ -1,5 +1,3 @@
-let gameOn = false;
-
 const greenButton = {
   number: 1,
   color: '#008000',
@@ -29,6 +27,7 @@ const blueButton = {
 }
 
 const simon = {
+  gameOn: false,
   sequence: [],
   seqPosition: 0,
   seqMax: 20,
@@ -39,7 +38,7 @@ const simon = {
     let index = 0;
     const sequenceLength = this.sequence.length;
     const timer = setInterval(function() {
-      if (gameOn && index < sequenceLength) {
+      if (simon.gameOn && index < sequenceLength) {
         $('#countDisplay').text(sequenceLength);
         performButtonAction(simon.sequence[index]);
         index++;
@@ -66,7 +65,7 @@ const simon = {
     simon.sequence = [];
     player.playerTurn = false;
     clearTimeout(player.inactionTimer);
-    if (gameOn) {
+    if (this.gameOn) {
       $('#countDisplay').text(0);
     }
     else {
@@ -88,7 +87,7 @@ const player = {
   playerTurn: false,
   inactionTimer: 0,
   checkForInaction: function() {
-    if (gameOn) {
+    if (simon.gameOn) {
       this.inactionTimer = setTimeout(function() {
         player.playerTurn = false;
         simon.errorSound.play();
@@ -166,25 +165,25 @@ function performButtonAction(btnNum) {
 }
 
 $('#power').click(function() {
-  gameOn = !gameOn;
+  simon.gameOn = !simon.gameOn;
   simon.resetGame();
 });
 
 $('#play').click(function() {
-  if (gameOn && simon.sequence.length === 0) {
+  if (simon.gameOn && simon.sequence.length === 0) {
     simon.addToSequence();
   }
 });
 
 $('#strict').click(function() {
-  if (gameOn) {
+  if (simon.gameOn) {
     simon.strictMode = !simon.strictMode;
     $('#strict').toggleClass('strictActive');
   }
 });
 
 $('section').mousedown(function(event) {
-  if (gameOn && player.playerTurn) {
+  if (simon.gameOn && player.playerTurn) {
     clearTimeout(player.inactionTimer);
     let btnSelected = event.target.id.slice(-1);
     btnSelected = parseInt(btnSelected);
