@@ -1,38 +1,31 @@
-const greenButton = {
-  number: 1,
-  color: '#008000',
-  litColor: '#00cc00',
-  sound: document.getElementById('sound1')
-}
-
-const redButton = {
-  number: 2,
-  color: '#b30000',
-  litColor: '#ff0000',
-  sound: document.getElementById('sound2')
-}
-
-const yellowButton = {
-  number: 3,
-  color: '#cccc00',
-  litColor: '#ffff00',
-  sound: document.getElementById('sound3')
-}
-
-const blueButton = {
-  number: 4,
-  color: '#0000cc',
-  litColor: '#0000ff',
-  sound: document.getElementById('sound4')
-}
-
 const simon = {
+  greenButton: {
+    color: '#008000',
+    litColor: '#00cc00',
+    sound: document.getElementById('sound1')
+  },
+  redButton: {
+    color: '#b30000',
+    litColor: '#ff0000',
+    sound: document.getElementById('sound2')
+  },
+  yellowButton: {
+    color: '#cccc00',
+    litColor: '#ffff00',
+    sound: document.getElementById('sound3')
+  },
+  blueButton: {
+    color: '#0000cc',
+    litColor: '#0000ff',
+    sound: document.getElementById('sound4')
+  },
   gameOn: false,
   sequence: [],
   seqPosition: 0,
   seqMax: 20,
   correctBtn: true,
-  errorSound: document.getElementById('error'),
+  errorSound1: document.getElementById('errorNo'),
+  errorSound2: document.getElementById('errorBuzz'),
   strictMode: false,
   showSequence: function() {
     let index = 0;
@@ -90,7 +83,7 @@ const player = {
     if (simon.gameOn) {
       this.inactionTimer = setTimeout(function() {
         player.playerTurn = false;
-        simon.errorSound.play();
+        simon.errorSound2.play();
         simon.seqPosition = 0;
         setTimeout(function() {
           if (simon.strictMode) {
@@ -137,16 +130,16 @@ function performButtonAction(btnNum) {
   let button;
   switch (btnNum) {
     case 1:
-      button = greenButton;
+      button = simon.greenButton;
       break;
     case 2:
-      button = redButton;
+      button = simon.redButton;
       break;
     case 3:
-      button = yellowButton;
+      button = simon.yellowButton;
       break;
     case 4:
-      button = blueButton;
+      button = simon.blueButton;
       break;
     }
 
@@ -159,7 +152,7 @@ function performButtonAction(btnNum) {
       button.sound.play();
     }
     else {
-      simon.errorSound.play();
+      simon.errorSound1.play();
       simon.correctBtn = true;
     }
 }
