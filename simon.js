@@ -33,7 +33,7 @@ const simon = {
     const timer = setInterval(function() {
       if (simon.gameOn && index < sequenceLength) {
         $('#countDisplay').text(sequenceLength);
-        performButtonAction(simon.sequence[index]);
+        simon.performButtonAction(simon.sequence[index]);
         index++;
       }
       else {
@@ -73,6 +73,36 @@ const simon = {
     setTimeout(function() {
       $('#winnerMessage').toggle();
     }, 5000);
+  },
+  performButtonAction: function(btnNum) {
+    let button;
+    switch (btnNum) {
+      case 1:
+        button = this.greenButton;
+        break;
+      case 2:
+        button = this.redButton;
+        break;
+      case 3:
+        button = this.yellowButton;
+        break;
+      case 4:
+        button = this.blueButton;
+        break;
+      }
+
+      $('#button'+btnNum).css('background-color', button.litColor);
+      setTimeout(() => {
+        $('#button'+btnNum).css('background-color', button.color);
+      }, 700);
+
+      if (simon.correctBtn) {
+        button.sound.play();
+      }
+      else {
+        simon.errorSound1.play();
+        simon.correctBtn = true;
+      }
   }
 }
 
@@ -126,36 +156,6 @@ const player = {
   }
 }
 
-function performButtonAction(btnNum) {
-  let button;
-  switch (btnNum) {
-    case 1:
-      button = simon.greenButton;
-      break;
-    case 2:
-      button = simon.redButton;
-      break;
-    case 3:
-      button = simon.yellowButton;
-      break;
-    case 4:
-      button = simon.blueButton;
-      break;
-    }
-
-    $('#button'+btnNum).css('background-color', button.litColor);
-    setTimeout(() => {
-      $('#button'+btnNum).css('background-color', button.color);
-    }, 700);
-
-    if (simon.correctBtn) {
-      button.sound.play();
-    }
-    else {
-      simon.errorSound1.play();
-      simon.correctBtn = true;
-    }
-}
 
 $('#power').click(function() {
   simon.gameOn = !simon.gameOn;
@@ -181,7 +181,7 @@ $('section').mousedown(function(event) {
     let btnSelected = event.target.id.slice(-1);
     btnSelected = parseInt(btnSelected);
     player.checkSequence(btnSelected);
-    performButtonAction(btnSelected);
+    simon.performButtonAction(btnSelected);
   }
 });
 
