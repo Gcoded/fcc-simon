@@ -8,6 +8,9 @@
 body {
     font-family: 'Play', sans-serif;
     text-align: center;
+    background-color: #afcfcb;
+    --bord-col: #595959;
+    --bord-wth: 16px;
 }
 
 h1 {
@@ -19,29 +22,35 @@ h1 {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    width: 400px;
-    height: 400px;
+    width: 450px;
+    height: 450px;
     position: relative;
     margin: 6% auto;
+    border-radius: 100%;
 }
 
 section {
     grid-column: span 1;
     grid-row: span 1;
-    border: 15px solid gray;
+    border: 22px solid var(--bord-col);
 }
 
 #controls {
     position: absolute;
-    width: 200px;
-    height: 200px;
+    width: 230px;
+    height: 230px;
     top: 50%;
     left: 50%;
-    margin: -100px 0 0 -100px;    /*to perfectly center element (half of w/h)*/
-    border: 15px solid gray;
+    margin: -115px 0 0 -115px;    /*to perfectly center element (half of w/h)*/
+    border: var(--bord-wth) solid var(--bord-col);
     border-radius: 100%;
-    background-color: white;
+    background-color: #cccccc;
     padding: 8px;
+}
+
+h2 {
+    font-size: 40px;
+    margin: 20px;
 }
 
 #countDisplay {
@@ -55,21 +64,29 @@ section {
 
 #button1 {
     border-top-left-radius: 100%;
+    border-right-width: calc(var(--bord-wth) * 0.5);
+    border-bottom-width: calc(var(--bord-wth) * 0.5);
     background-color: #008000;
 }
 
 #button2 {
     border-top-right-radius: 100%;
+    border-left-width: calc(var(--bord-wth) * 0.5);
+    border-bottom-width: calc(var(--bord-wth) * 0.5);
     background-color: #b30000;
 }
 
 #button3 {
     border-bottom-left-radius: 100%;
+    border-top-width: calc(var(--bord-wth) * 0.5);
+    border-right-width: calc(var(--bord-wth) * 0.5);
     background-color: #cccc00;
 }
 
 #button4 {
     border-bottom-right-radius: 100%;
+    border-top-width: calc(var(--bord-wth) * 0.5);
+    border-left-width: calc(var(--bord-wth) * 0.5);
     background-color: #0000cc;
 }
 

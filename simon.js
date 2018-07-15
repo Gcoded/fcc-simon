@@ -27,6 +27,36 @@ const simon = {
   errorSound1: document.getElementById('errorNo'),
   errorSound2: document.getElementById('errorBuzz'),
   strictMode: false,
+  performButtonAction: function(btnNum) {
+    let button;
+    switch (btnNum) {
+      case 1:
+        button = this.greenButton;
+        break;
+      case 2:
+        button = this.redButton;
+        break;
+      case 3:
+        button = this.yellowButton;
+        break;
+      case 4:
+        button = this.blueButton;
+        break;
+      }
+
+      $('#button'+btnNum).css('background-color', button.litColor);
+      setTimeout(() => {
+        $('#button'+btnNum).css('background-color', button.color);
+      }, 700);
+
+      if (simon.correctBtn) {
+        button.sound.play();
+      }
+      else {
+        simon.errorSound1.play();
+        simon.correctBtn = true;
+      }
+  },
   showSequence: function() {
     let index = 0;
     const sequenceLength = this.sequence.length;
@@ -72,37 +102,7 @@ const simon = {
     $('#winnerMessage').toggle();
     setTimeout(function() {
       $('#winnerMessage').toggle();
-    }, 5000);
-  },
-  performButtonAction: function(btnNum) {
-    let button;
-    switch (btnNum) {
-      case 1:
-        button = this.greenButton;
-        break;
-      case 2:
-        button = this.redButton;
-        break;
-      case 3:
-        button = this.yellowButton;
-        break;
-      case 4:
-        button = this.blueButton;
-        break;
-      }
-
-      $('#button'+btnNum).css('background-color', button.litColor);
-      setTimeout(() => {
-        $('#button'+btnNum).css('background-color', button.color);
-      }, 700);
-
-      if (simon.correctBtn) {
-        button.sound.play();
-      }
-      else {
-        simon.errorSound1.play();
-        simon.correctBtn = true;
-      }
+    }, 6000);
   }
 }
 
