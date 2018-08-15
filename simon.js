@@ -159,6 +159,7 @@ const player = {
 
 $('#power').click(function() {
   simon.gameOn = !simon.gameOn;
+  $('#power').toggleClass('pwr-on');
   simon.resetGame();
 });
 
