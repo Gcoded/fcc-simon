@@ -59,11 +59,13 @@ h2 {
 #countDisplay {
     margin: auto;
     width: 50px;
-    height: 26px;
+    height: 30px;
     background-color: #000000;
     color: #ffffff;
     font-size: 20px;
     border-radius: 4px;
+    box-shadow: inset 0px 0px 6px 3px #4d4d4d;
+    padding: 3px;
 }
 
 #button1 {
@@ -95,29 +97,40 @@ h2 {
 }
 
 button {
-    font-size: 14px;
     margin: 6px auto;
-    border-radius: 10%;
-    border: 1px solid #000;
+    border: 1px solid #4d4d4d;
+    box-shadow: 0px 0px 3px 1px #000;
+    width: 50px;
+    height: 20px;
+    font-size: 12px;
 }
 
 #power {
     display: block;
-    height: 26px;
     width: 60px;
+    height: 26px;
     border-radius: 10%;
     border: 1px solid #000;
+    font-size: 16px;
     color: #ffffff;
     background-color: #4d0000;
-    box-shadow: 0px 0px 3px 1px #000;
 }
 
 .pwr-on {
     background-color: #cc0000 !important;
 }
+#start {
+    margin-right: 8px;
+    background-color: #0099cc;
+}
+
+#strict {
+    margin-left: 8px;
+    background-color: #805300;
+}
 
 .strictActive {
-    background-color: #ffb833;
+    background-color: #ffb833 !important;
 }
 
 #winnerMessage {

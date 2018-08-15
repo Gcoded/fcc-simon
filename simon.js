@@ -163,7 +163,7 @@ $('#power').click(function() {
   simon.resetGame();
 });
 
-$('#play').click(function() {
+$('#start').click(function() {
   if (simon.gameOn && simon.sequence.length === 0) {
     simon.addToSequence();
   }
